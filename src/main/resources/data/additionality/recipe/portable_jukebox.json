@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": "minecraft:redstone",
+    "P": "minecraft:piston",
+    "C": "minecraft:copper_ingot",
+    "J": "minecraft:jukebox"
+  },
+  "pattern": [
+    "RPR",
+    "CJC",
+    "RPR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "additionality:portable_jukebox"
+  }
+}

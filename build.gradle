@@ -19,8 +19,25 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
+
     maven {
         url = uri("https://maven.architectury.dev/")
+    }
+
+    maven {
+        name = "Illusive Soulworks maven"
+        url = "https://maven.theillusivec4.top/"
+    }
+
+    exclusiveContent {
+        forRepository {
+            maven {
+                url "https://cursemaven.com"
+            }
+        }
+        filter {
+            includeGroup "curse.maven"
+        }
     }
 }
 
@@ -48,7 +65,7 @@ neoForge {
     runs {
         client {
             client()
-
+            programArgument '--username Notch'
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
@@ -137,6 +154,10 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     implementation "dev.architectury:yarn-mappings-patch-neoforge:1.20.6+build.4"
+
+    //compileOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}:api")
+    //runtimeOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}")
+
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

@@ -3,42 +3,78 @@ package com.theyoungseth.mod.screens;
 import com.theyoungseth.mod.Additionality;
 import com.theyoungseth.mod.items.PortableJukebox;
 import com.theyoungseth.mod.menus.JukeboxSelectionMenu;
+import com.theyoungseth.mod.utils.GlobalStaticVariables;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraft.world.item.*;
+import net.minecraft.world.phys.Vec2;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import org.joml.Vector2d;
 
 import javax.annotation.Nullable;
 
-import static net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion.MOD_ID;
+import java.util.List;
+import java.util.Objects;
 
 public class JukeboxContainerScreen extends AbstractContainerScreen<JukeboxSelectionMenu> {
 
-    private static final ResourceLocation BACKGROUND_LOCATION = ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/gui/container/portable_jukebox.png");
+    private static final ResourceLocation BACKGROUND_LOCATION = ResourceLocation.fromNamespaceAndPath(Additionality.MODID, "textures/gui/container/portable_jukebox.png");
     public ScrollableListWidget buttonList;
     public ScrollableListWidget.ButtonEntry selected;
+    public Inventory playerInv;
+    public int buttonHeight;
+    public int buttonSpacing;
+    public Vector2d playingPosition;
+    public Vector2d currentlyPlayingPosition;
 
     public JukeboxContainerScreen(JukeboxSelectionMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
+        this.playerInv = playerInventory;
+    }
 
-        if (menu.discs == null || menu.discs.isEmpty()) {
-            Additionality.LOGGER.warn("Discs list is null or empty in JukeboxContainerScreen");
-            return;
-        } else {
-            Additionality.LOGGER.warn("YIPPIEEEEEE");
-        }
+    @Override
+    protected void init() {
+        super.init();
+
+        //general
+        imageWidth = 230;
+        imageHeight = 190;
+        leftPos = (width - imageWidth) / 2;
+        topPos = (height - imageHeight) / 2;
+        titleLabelX = 140;
+        titleLabelY = 174;
+        buttonHeight = 17;
+        buttonSpacing = buttonHeight + (buttonHeight / 3);
+
+        playingPosition = new Vector2d(180, 60);
+        currentlyPlayingPosition = new Vector2d(playingPosition.x, playingPosition.y + 10);
+
+        //Additionality.LOGGER.info("\n WIDTH: " + imageWidth + "\n HEIGHT: " + imageHeight);
+
+        //buttonList
+        int left = leftPos + 12;
+        int top = topPos + 55;
+        int right = imageWidth - 115;
+        int bottom = imageHeight + 66;
+        int itemHeight = imageHeight - 65;
+
+        buttonList = new ScrollableListWidget(this, left, top, right, bottom, 0, itemHeight, menu.discs);
+
+        addRenderableWidget(buttonList);
     }
 
     @Override
@@ -49,8 +85,23 @@ public class JukeboxContainerScreen extends AbstractContainerScreen<JukeboxSelec
                 this.leftPos, this.topPos,
                 0, 0,
                 this.imageWidth, this.imageHeight,
-                256, 256
+                this.imageWidth, this.imageHeight
         );
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        this.renderBg(graphics, partialTick, mouseX, mouseY);
+        super.render(graphics, mouseX, mouseY, partialTick);
+
+        this.renderTooltip(graphics, mouseX, mouseY);
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 16777215, false);
+        guiGraphics.drawCenteredString(this.font, Component.translatable("label.additionality.playing"), (int) this.playingPosition.x, (int) playingPosition.y, 16777215);
+        if(GlobalStaticVariables.currentlyPlaying != null) guiGraphics.drawCenteredString(this.font, GlobalStaticVariables.currentlyPlaying, (int) this.currentlyPlayingPosition.x, (int) currentlyPlayingPosition.y, 16777215); else guiGraphics.drawCenteredString(this.font, Component.literal("§cnothing."), (int) this.currentlyPlayingPosition.x, (int) currentlyPlayingPosition.y, 16777215);
     }
 
     @Override
@@ -71,28 +122,8 @@ public class JukeboxContainerScreen extends AbstractContainerScreen<JukeboxSelec
         return super.mouseDragged(mouseX, mouseY, btn, deltaX, deltaY);
     }
 
-    @Override
-    protected void init() {
-        super.init();
 
-        int left = this.leftPos + 5;
-        int top = this.topPos + 25;
-        int right = imageWidth - 44;
-        int bottom = this.imageHeight + 31;
-        int itemHeight = imageHeight - 21;
 
-        buttonList = new ScrollableListWidget(this, left, top, right, bottom, 0, itemHeight, menu.discs);
-
-        this.addRenderableWidget(buttonList);
-    }
-
-    @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        this.renderBg(graphics, partialTick, mouseX, mouseY);
-        super.render(graphics, mouseX, mouseY, partialTick);
-
-        this.renderTooltip(graphics, mouseX, mouseY);
-    }
 
     @Override
     public boolean mouseScrolled(double delta, double dontknowdontcare, double mouseX, double mouseY) {
@@ -102,28 +133,24 @@ public class JukeboxContainerScreen extends AbstractContainerScreen<JukeboxSelec
         return super.mouseScrolled(delta, dontknowdontcare, mouseX, mouseY);
     }
 
-    @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
-    }
+
 
     public void setSelected(ScrollableListWidget.ButtonEntry buttonEntry) {
         selected = buttonEntry;
     }
 
-    public class ScrollableListWidget extends ObjectSelectionList<JukeboxContainerScreen.ScrollableListWidget.ButtonEntry> {
+    public class ScrollableListWidget extends ObjectSelectionList<ScrollableListWidget.ButtonEntry> {
 
         private final int listWidth;
-        private int _spacing;
         private JukeboxContainerScreen parent;
-        private JukeboxContainerScreen.ScrollableListWidget.ButtonEntry selected;
+        private ButtonEntry selected;
 
-        public ScrollableListWidget(JukeboxContainerScreen parent, int x, int y, int listWidth, int itemHeight, int top, int bottom, ListTag discs) {
-            super(Minecraft.getInstance(), listWidth, bottom - top, top, parent.getFont().lineHeight * 2 + 8);
+        public ScrollableListWidget(JukeboxContainerScreen parent, int x, int y, int listWidth, int itemHeight, int top, int bottom, List<ItemStack> discs) {
+            super(Minecraft.getInstance(), listWidth, bottom - top, top, parent.buttonSpacing);
             this.parent = parent;
             this.listWidth = listWidth;
 
-            this.setPosition(x, y);
+            setPosition(x, y);
 
             if (discs == null || discs.isEmpty()) {
                 Additionality.LOGGER.warn("Discs list is null or empty!");
@@ -131,12 +158,18 @@ public class JukeboxContainerScreen extends AbstractContainerScreen<JukeboxSelec
             }
 
             int i = 0;
-            for (Tag tag : discs) {
-                this.addEntry(new JukeboxContainerScreen.ScrollableListWidget.ButtonEntry(tag.toString(), i * 20, parent, tag));
+            for (ItemStack stack : discs) {
+                List<Component> list = stack.getTooltipLines(Item.TooltipContext.of(playerInv.player.level()), playerInv.player, Minecraft.getInstance().options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
+                Component component = null;
+                for(int t = 0; t < list.size(); t++) {
+                    if (list.get(t).getString().contains("-")) component = list.get(t);
+                }
+                if(component == null) component = list.getLast();
+                component = component.copy().setStyle(list.get(0).getStyle());
+                addEntry(new ButtonEntry((MutableComponent) component, i * buttonHeight, parent, stack));
                 i++;
-                Additionality.LOGGER.info("Button: " + i);
             }
-            this.setFocused(true);
+            setFocused(true);
         }
 
         @Override
@@ -145,7 +178,7 @@ public class JukeboxContainerScreen extends AbstractContainerScreen<JukeboxSelec
         }
 
         @Override
-        public void setSelected(@Nullable JukeboxContainerScreen.ScrollableListWidget.ButtonEntry entry) {
+        public void setSelected(@Nullable ButtonEntry entry) {
             super.setSelected(entry);
             if (entry != null) {
                 parent.selected = entry;
@@ -165,7 +198,7 @@ public class JukeboxContainerScreen extends AbstractContainerScreen<JukeboxSelec
         public boolean mouseScrolled(double delta, double dontknowdontcare, double mouseX, double mouseY) {
             if (this.isMouseOver(mouseX, mouseY)) {
                 double currentScroll = scrollAmount();
-                setScrollAmount(currentScroll - delta * 20); // Adjust scroll speed if necessary
+                setScrollAmount(currentScroll - delta * buttonHeight / 2); // Adjust scroll speed if necessary
                 return true;
             }
             return super.mouseScrolled(delta, dontknowdontcare, mouseX, mouseY);
@@ -226,38 +259,46 @@ public class JukeboxContainerScreen extends AbstractContainerScreen<JukeboxSelec
             return listWidth;
         }
 
-        public int spacing() {
-            return _spacing;
-        }
-
-        public void setSpacing(int i) {
-            _spacing = i;
-        }
-
-        public class ButtonEntry extends ObjectSelectionList.Entry<JukeboxContainerScreen.ScrollableListWidget.ButtonEntry> {
-
-            private final String label;
+        public class ButtonEntry extends Entry<ButtonEntry> {
+            private final MutableComponent label;
             private final int yOffset;
             private Button button;
             private JukeboxContainerScreen parent;
 
-            public ButtonEntry(String label, int yOffset, JukeboxContainerScreen parent, Tag tag) {
+            public ButtonEntry(MutableComponent label, int yOffset, JukeboxContainerScreen parent, ItemStack stack) {
                 this.label = label;
                 this.yOffset = yOffset;
                 this.parent = parent;
 
-                assert Minecraft.getInstance().player != null;
-                ItemStack stack = ItemStack.parse(Minecraft.getInstance().player.registryAccess(), tag).get();
-
-                this.button = new Button.Builder(Component.literal(label),
-                        btn -> onPress(btn, stack)
-                        ).bounds(0, 0, 120, 20)
+                this.button = new Button.Builder(label,
+                        btn -> onPress(btn, stack, parent, GlobalStaticVariables.currentlyPlayingPortableJukeboxSong)
+                        ).bounds(0, 0, 105, buttonHeight)
                         .build();
             }
 
-            public void onPress(Button btn, ItemStack stack) {
-                assert Minecraft.getInstance().player != null;
-                Minecraft.getInstance().player.playSound(stack.get(DataComponents.JUKEBOX_PLAYABLE).song().holder().get().value().soundEvent().value(), 1f, 1f);
+            public void onPress(Button btn, ItemStack stack, JukeboxContainerScreen parent, SoundInstance instance) {
+                //TO-DO: ADD STOP BUTTON
+                SoundManager manager = Minecraft.getInstance().getSoundManager();
+                playButtonClickSound(manager);
+                SoundInstance preInstance = instance;
+                SoundEvent song = JukeboxSong.fromStack(Minecraft.getInstance().level.registryAccess(), stack).get().value().soundEvent().value();
+                instance = PortableJukebox.createSoundInstance(song, SoundSource.RECORDS, 1f, 1f, true, SoundInstance.Attenuation.LINEAR, parent.playerInv.player);
+                if(preInstance != null) {
+                    manager.stop(preInstance);
+                    GlobalStaticVariables.currentlyPlaying = null;
+                    GlobalStaticVariables.currentlyPlayingPortableJukeboxSong = null;
+                    if(!Objects.equals(preInstance.toString(), instance.toString())) {
+                        manager.play(instance);
+                        GlobalStaticVariables.currentlyPlaying = btn.getMessage();
+                        GlobalStaticVariables.currentlyPlayingPortableJukeboxSong = instance;
+                    }
+                } else {
+                    GlobalStaticVariables.currentlyPlayingPortableJukeboxSong = instance;
+                    GlobalStaticVariables.currentlyPlaying = btn.getMessage();
+                    manager.play(instance);
+                }
+
+
             }
 
             @Override
@@ -280,13 +321,13 @@ public class JukeboxContainerScreen extends AbstractContainerScreen<JukeboxSelec
             @Override
             public void setFocused(boolean focused) {
                 if (focused) {
-                    JukeboxContainerScreen.ScrollableListWidget.this.setSelected(this);
+                    ScrollableListWidget.this.setSelected(this);
                 }
             }
 
             @Override
             public boolean isFocused() {
-                return JukeboxContainerScreen.ScrollableListWidget.this.getSelected() == this;
+                return ScrollableListWidget.this.getSelected() == this;
             }
 
             @Override
