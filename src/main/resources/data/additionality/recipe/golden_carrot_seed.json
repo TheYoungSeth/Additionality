@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "ingredients": [
+        "minecraft:shears",
+        "minecraft:golden_carrot"
+    ],
+    "result": {
+        "count": 9,
+        "id": "additionality:golden_carrot_seed"
+    }
+}

@@ -1,5 +1,12 @@
 {
+  "itemGroup.additionality": "§dAdditionality",
+
   "item.additionality.portable_jukebox": "Portable Jukebox",
+  "item.additionality.golden_fertilizer": "Golden Fertilizer",
+
+  "block.additionality.golden_farmland": "Golden Farmland",
+  "block.additionality.golden_carrot_seed": "Mini Golden Carrot",
+
   "menu.title.additionality.jukebox_selection_menu": "Port-a-Juke(tm)",
 
   "label.additionality.no_discs": "§dNo discs stored.",
@@ -7,8 +14,10 @@
   "label.additionality.added": "§aAdded Disc to your collection.",
   "label.additionality.playing": "§aNow playing",
 
-  "tooltip.additionality.portable_jukebox.non_shift": "Press §eShift §fto see usage.",
+  "tooltip.additionality.see_usage": "Press §eShift §fto see usage.",
   "tooltip.additionality.portable_jukebox.shift": "Put §o§dany §rMusic Disc in your §eoffhand §rand §esneak-right-click §rto insert it into the §dPort-a-Juke(tm).§r",
   "tooltip.additionality.portable_jukebox.stored": " §dStored Disc(s)§r",
-  "tooltip.additionality.portable_jukebox.currentlyPlaying": "Playing: §r"
+  "tooltip.additionality.portable_jukebox.currentlyPlaying": "Playing: §r",
+  "tooltip.additionality.golden_farmland.shift": "Can grow §eMini Golden Carrots§r.",
+  "tooltip.additionality.golden_farmland.shift2": "Is obtained by using §eGolden Fertilizer§r on regular farmland."
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "additionality:golden_carrot_seed",
+    "additionality:golden_carrot_seed",
+    "additionality:golden_carrot_seed",
+    "additionality:golden_carrot_seed",
+    "additionality:golden_carrot_seed",
+    "additionality:golden_carrot_seed",
+    "additionality:golden_carrot_seed",
+    "additionality:golden_carrot_seed",
+    "additionality:golden_carrot_seed"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:golden_carrot"
+  }
+}

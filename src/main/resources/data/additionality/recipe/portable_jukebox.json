@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "R": "minecraft:redstone",
     "P": "minecraft:piston",

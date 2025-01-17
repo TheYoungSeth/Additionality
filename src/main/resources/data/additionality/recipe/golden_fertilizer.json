@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "minecraft:paper",
+    "B": "#c:fertilizers",
+    "F": "minecraft:fermented_spider_eye",
+    "G": "minecraft:golden_apple"
+  },
+  "pattern": [
+    " F ",
+    "BGB",
+    " P "
+  ],
+  "result": {
+    "count": 1,
+    "id": "additionality:golden_fertilizer"
+  }
+}

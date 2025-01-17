@@ -48,7 +48,7 @@ public class PortableJukebox extends Item {
             if(JukeboxContainerScreen.hasShiftDown()) {
                 tooltipComponents.add(Component.translatable("tooltip.additionality.portable_jukebox.shift"));
             } else {
-                tooltipComponents.add(Component.translatable("tooltip.additionality.portable_jukebox.non_shift"));
+                tooltipComponents.add(Component.translatable("tooltip.additionality.see_usage"));
             }
         } else {
             tooltipComponents.add(Component.literal(String.valueOf(stack.get(DataComponents.CONTAINER).getSlots())).append(Component.translatable("tooltip.additionality.portable_jukebox.stored")));
