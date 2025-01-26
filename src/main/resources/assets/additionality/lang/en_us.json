@@ -3,6 +3,7 @@
 
   "item.additionality.portable_jukebox": "Portable Jukebox",
   "item.additionality.golden_fertilizer": "Golden Fertilizer",
+  "item.additionality.blast_proofing_paste": "§cBlast-Proofing Paste",
 
   "block.additionality.golden_farmland": "Golden Farmland",
   "block.additionality.golden_carrot_seed": "Mini Golden Carrot",
@@ -19,5 +20,6 @@
   "tooltip.additionality.portable_jukebox.stored": " §dStored Disc(s)§r",
   "tooltip.additionality.portable_jukebox.currentlyPlaying": "Playing: §r",
   "tooltip.additionality.golden_farmland.shift": "Can grow §eMini Golden Carrots§r.",
-  "tooltip.additionality.golden_farmland.shift2": "Is obtained by using §eGolden Fertilizer§r on regular farmland."
+  "tooltip.additionality.golden_farmland.shift2": "Is obtained by using §eGolden Fertilizer§r on regular farmland.",
+  "tooltip.additionality.blast_proofing_paste": "W.I.P. - §cDOES NOT WORK§r"
 }
