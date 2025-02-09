@@ -10,6 +10,8 @@ public class GlobalStaticVariables {
 
     public static final int ITEM_PICKUP_EVENT = 0;
     public static final int ITEM_DROP_EVENT = 1;
+    public static final int EGG_TIME = 100;
+    public static final int CHECK_TIME = 20;
 
 
 

@@ -2,6 +2,7 @@ package com.theyoungseth.mod.blocks.entities;
 
 import com.theyoungseth.mod.blocks.Nest;
 import com.theyoungseth.mod.registries.BlockEntities;
+import com.theyoungseth.mod.utils.GlobalStaticVariables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -30,15 +31,15 @@ public class NestEntity extends BlockEntity {
     public NestEntity(BlockPos pos, BlockState blockState) {
         super(BlockEntities.NEST.get(), pos, blockState);
         random = RandomSource.create();
-        this.eggTime = 100; //this.random.nextInt(6000) + 8000;
-        this.checkTime = 20;
+        this.eggTime = GlobalStaticVariables.EGG_TIME;
+        this.checkTime = GlobalStaticVariables.CHECK_TIME;
     }
 
     public static <T extends NestEntity> void eggTicker(Level level, BlockPos blockPos, BlockState blockState, T t) {
         ServerLevel serverLevel = (ServerLevel)level;
 
         if(--t.checkTime <= 0) {
-            t.checkTime = 20;
+            t.checkTime = GlobalStaticVariables.CHECK_TIME;
             AABB eggSearchBox = new AABB(blockPos.getX() - 2.5, blockPos.getY(), blockPos.getZ() - 2.5, blockPos.getX() + 2.5, blockPos.getY() + 1, blockPos.getZ() + 2.5);
             List<ItemEntity> itemEntityList = serverLevel.getEntitiesOfClass(ItemEntity.class, eggSearchBox);
             for(ItemEntity item : itemEntityList) {
@@ -72,10 +73,10 @@ public class NestEntity extends BlockEntity {
                     serverLevel.addFreshEntity(chicken);
                 }
                 //needs to be client side im gonna kill myself
-            /*for(int i = 0; i < 8; ++i) {
-                level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, Items.EGG.getDefaultInstance()), blockPos.getX(), blockPos.getY() + 0.2F, blockPos.getZ(), ((double)t.random.nextFloat() - (double)0.5F) * 0.08, ((double)t.random.nextFloat() - (double)0.5F) * 0.08, ((double)t.random.nextFloat() - (double)0.5F) * 0.08);
-            }*/
-                t.eggTime = 100; //t.random.nextInt(6000) + 8000;
+                /*for(int i = 0; i < 8; ++i) {
+                    level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, Items.EGG.getDefaultInstance()), blockPos.getX(), blockPos.getY() + 0.2F, blockPos.getZ(), ((double)t.random.nextFloat() - (double)0.5F) * 0.08, ((double)t.random.nextFloat() - (double)0.5F) * 0.08, ((double)t.random.nextFloat() - (double)0.5F) * 0.08);
+                }*/
+                t.eggTime = GlobalStaticVariables.EGG_TIME;
             }
         }
 

@@ -3,6 +3,7 @@ package com.theyoungseth.mod.blocks;
 import com.mojang.serialization.MapCodec;
 import com.theyoungseth.mod.blocks.entities.NestEntity;
 import com.theyoungseth.mod.registries.BlockEntities;
+import com.theyoungseth.mod.utils.GlobalStaticVariables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -57,6 +59,13 @@ public class Nest extends BaseEntityBlock {
 
     protected BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation((Direction)state.getValue(FACING)));
+    }
+
+    @Override
+    protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
+        List<ItemStack> stacks = super.getDrops(state, params);
+        if(state.getValue(EGGS) > 0) stacks.add(new ItemStack(Items.EGG, state.getValue(EGGS)));
+        return stacks;
     }
 
     @Override
@@ -102,10 +111,23 @@ public class Nest extends BaseEntityBlock {
             stack.shrink(1);
             level.setBlock(pos, state.setValue(EGGS, state.getValue(EGGS) + 1), 3);
             level.playSound(player, pos, SoundEvents.GRASS_STEP, SoundSource.BLOCKS, 1.7F, .7F);
+
+            NestEntity entity = (NestEntity) level.getBlockEntity(pos);
+            entity.eggTime = GlobalStaticVariables.EGG_TIME;
+
             return InteractionResult.SUCCESS;
         } else if(!stack.is(Items.EGG) && state.getValue(EGGS) > 0) {
             level.setBlock(pos, state.setValue(EGGS, state.getValue(EGGS) - 1), 3);
-            level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5F, pos.getY()+ 0.5F, pos.getZ() + 0.5F, new ItemStack(Items.EGG)));
+
+            // reset time for egg to hatch and extend check time to pick up items
+            NestEntity entity = (NestEntity) level.getBlockEntity(pos);
+            entity.eggTime = GlobalStaticVariables.EGG_TIME;
+            entity.checkTime = GlobalStaticVariables.CHECK_TIME * 2;
+
+            ItemEntity item = new ItemEntity(level, pos.getX() + 0.5F, pos.getY()+ 0.5F, pos.getZ() + 0.5F, new ItemStack(Items.EGG));
+            item.setInvulnerable(true);
+            level.addFreshEntity(item);
+
             level.playSound(player, pos, SoundEvents.GRASS_STEP, SoundSource.BLOCKS, 1.7F, .7F);
             return InteractionResult.SUCCESS;
 

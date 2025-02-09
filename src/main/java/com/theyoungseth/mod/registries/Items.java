@@ -39,7 +39,7 @@ public class Items {
     //BLOCK ITEMS
     public static final DeferredItem<BlockItem> GOLDEN_CARROT_SEED = ITEMS.registerSimpleBlockItem("golden_carrot_seed", Blocks.GoldenCarrotBlock, new Item.Properties().setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Additionality.MODID, "golden_carrot_seed"))).food(new FoodProperties(1, 0.23F, false)));
     public static final DeferredItem<BlockItem> GOLDEN_FARMLAND = ITEMS.registerSimpleBlockItem("golden_farmland", Blocks.GOLDEN_FARMLAND, new Item.Properties().setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Additionality.MODID, "golden_farmland"))));
-    public static final DeferredItem<BlockItem> NEST = ITEMS.registerSimpleBlockItem("nest", Blocks.NEST, new Item.Properties().setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Additionality.MODID, "nest"))));
+    public static final DeferredItem<BlockItem> NEST = ITEMS.registerSimpleBlockItem("nest", Blocks.NEST, new Item.Properties().stacksTo(4).setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Additionality.MODID, "nest"))));
 
 
 }
