@@ -7,6 +7,7 @@
 
   "block.additionality.golden_farmland": "Golden Farmland",
   "block.additionality.golden_carrot_seed": "Mini Golden Carrot",
+  "block.additionality.nest": "Chicken Nest",
 
   "menu.title.additionality.jukebox_selection_menu": "Port-a-Juke(tm)",
 
@@ -16,7 +17,7 @@
   "label.additionality.playing": "§aNow playing",
 
   "tooltip.additionality.see_usage": "Press §eShift §fto see usage.",
-  "tooltip.additionality.portable_jukebox.shift": "Put §o§dany §rMusic Disc in your §eoffhand §rand §esneak-right-click §rto insert it into the §dPort-a-Juke(tm).§r",
+  "tooltip.additionality.portable_jukebox.shift": "Put §o§dany §rMusic Disc in your §eoffhand §rand §esneak-right-click§r to insert it into the §dPort-a-Juke(tm).§r",
   "tooltip.additionality.portable_jukebox.stored": " §dStored Disc(s)§r",
   "tooltip.additionality.portable_jukebox.currentlyPlaying": "Playing: §r",
   "tooltip.additionality.golden_farmland.shift": "Can grow §eMini Golden Carrots§r.",

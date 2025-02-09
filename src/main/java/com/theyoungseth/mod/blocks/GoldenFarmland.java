@@ -1,7 +1,6 @@
 package com.theyoungseth.mod.blocks;
 
 import com.theyoungseth.mod.screens.JukeboxContainerScreen;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

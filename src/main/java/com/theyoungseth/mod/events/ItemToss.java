@@ -1,15 +1,10 @@
 package com.theyoungseth.mod.events;
 
 import com.theyoungseth.mod.Additionality;
-import com.theyoungseth.mod.items.PortableJukebox;
 import com.theyoungseth.mod.network.PickupDropJukeboxPayload;
 import com.theyoungseth.mod.registries.Items;
 import com.theyoungseth.mod.utils.GlobalStaticVariables;
-import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.Item;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.item.ItemTossEvent;

@@ -1,6 +1,7 @@
 package com.theyoungseth.mod.items;
 
 import com.theyoungseth.mod.Additionality;
+import com.theyoungseth.mod.registries.StateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -11,9 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
@@ -31,6 +31,8 @@ public class BlastProofingPaste extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         CompoundTag tag = context.getItemInHand().get(DataComponents.CUSTOM_DATA).isEmpty() ? tag = new CompoundTag() : context.getItemInHand().get(DataComponents.CUSTOM_DATA).copyTag();
+        BlockState clickedBlock = context.getLevel().getBlockState(context.getClickedPos());
+        Level level = context.getLevel();
 
         ItemStack itemStack = context.getItemInHand();
         if(context.getPlayer().isCrouching()) {
@@ -53,6 +55,12 @@ public class BlastProofingPaste extends Item {
 
         } else {
             context.getPlayer().displayClientMessage(Component.literal("bomboclart it didn't work :("), true);
+            context.getPlayer().displayClientMessage(Component.literal(clickedBlock.getValue(StateProperties.BLAST_RESISTANT).toString()), false);
+            clickedBlock.setValue(StateProperties.BLAST_RESISTANT, false);
+            level.setBlock(context.getClickedPos(), clickedBlock, 11);
+            //context.getPlayer().displayClientMessage(Component.literal(clickedBlock.getValue(StateProperties.BLAST_RESISTANT).toString()), false);
+
+
             //context.getLevel().setBlock(context.getClickedPos(), Blocks.AIR.defaultBlockState(), 3);
         }
 

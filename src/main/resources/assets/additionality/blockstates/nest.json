@@ -1,0 +1,82 @@
+{
+  "variants": {
+    "facing=north,eggs=0": {
+      "model": "additionality:block/nest",
+      "y": 180
+    },
+    "facing=north,eggs=1": {
+      "model": "additionality:block/nest1",
+      "y": 180
+    },
+    "facing=north,eggs=2": {
+      "model": "additionality:block/nest2",
+      "y": 180
+    },
+    "facing=north,eggs=3": {
+      "model": "additionality:block/nest3",
+      "y": 180
+    },
+    "facing=north,eggs=4": {
+      "model": "additionality:block/nest4",
+      "y": 180
+    },
+
+    "facing=south,eggs=0": {
+      "model": "additionality:block/nest"
+    },
+    "facing=south,eggs=1": {
+      "model": "additionality:block/nest1"
+    },
+    "facing=south,eggs=2": {
+      "model": "additionality:block/nest2"
+    },
+    "facing=south,eggs=3": {
+      "model": "additionality:block/nest3"
+    },
+    "facing=south,eggs=4": {
+      "model": "additionality:block/nest4"
+    },
+
+    "facing=east,eggs=0": {
+      "model": "additionality:block/nest",
+      "y": 270
+    },
+    "facing=east,eggs=1": {
+      "model": "additionality:block/nest1",
+      "y": 270
+    },
+    "facing=east,eggs=2": {
+      "model": "additionality:block/nest2",
+      "y": 270
+    },
+    "facing=east,eggs=3": {
+      "model": "additionality:block/nest3",
+      "y": 270
+    },
+    "facing=east,eggs=4": {
+      "model": "additionality:block/nest4",
+      "y": 270
+    },
+
+    "facing=west,eggs=0": {
+      "model": "additionality:block/nest",
+        "y": 90
+    },
+    "facing=west,eggs=1": {
+      "model": "additionality:block/nest1",
+      "y": 90
+    },
+    "facing=west,eggs=2": {
+      "model": "additionality:block/nest2",
+      "y": 90
+    },
+    "facing=west,eggs=3": {
+      "model": "additionality:block/nest3",
+      "y": 90
+    },
+    "facing=west,eggs=4": {
+      "model": "additionality:block/nest4",
+      "y": 90
+    }
+  }
+}

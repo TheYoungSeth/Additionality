@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.theyoungseth.mod.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BlastMixin"
+  ],
+  "client": [
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

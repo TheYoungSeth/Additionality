@@ -4,7 +4,6 @@ import com.theyoungseth.mod.Additionality;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -20,6 +19,8 @@ public class CreativeTabs {
                 output.accept(Items.GOLDEN_CARROT_SEED);
                 output.accept(Items.GOLDEN_FARMLAND);
                 output.accept(Items.GOLDEN_FERTILIZER);
+                output.accept(Items.BLAST_PROOFING_PASTE);
+                output.accept(Items.NEST);
             }).build());
 
 }

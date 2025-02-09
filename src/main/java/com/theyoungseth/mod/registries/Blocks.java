@@ -3,6 +3,7 @@ package com.theyoungseth.mod.registries;
 import com.theyoungseth.mod.Additionality;
 import com.theyoungseth.mod.blocks.GoldenCarrotBlock;
 import com.theyoungseth.mod.blocks.GoldenFarmland;
+import com.theyoungseth.mod.blocks.Nest;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -40,6 +41,17 @@ public class Blocks {
                     .randomTicks()
                     .strength(0.6F)
                     .sound(SoundType.GRAVEL)
+    );
+
+    public static final DeferredBlock<Block> NEST = BLOCKS.registerBlock(
+            "nest",
+            Nest::new,
+            BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Additionality.MODID, "nest")))
+                    .randomTicks()
+                    .strength(0.6F)
+                    .sound(SoundType.GRASS)
+                    .noOcclusion()
     );
 
 }

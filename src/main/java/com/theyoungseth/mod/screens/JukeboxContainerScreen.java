@@ -4,7 +4,6 @@ import com.theyoungseth.mod.Additionality;
 import com.theyoungseth.mod.items.PortableJukebox;
 import com.theyoungseth.mod.menus.JukeboxSelectionMenu;
 import com.theyoungseth.mod.utils.GlobalStaticVariables;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -20,9 +19,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.*;
-import net.minecraft.world.phys.Vec2;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector2d;
 
 import javax.annotation.Nullable;
